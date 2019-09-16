@@ -1,0 +1,9 @@
+---
+- name: install chrony package
+  yum:
+    name: [ "{{ item }}" ]
+    state: present
+  with_items: "{{ chrony_package }}"
+  tags:
+    - chrony
+    - chronyd

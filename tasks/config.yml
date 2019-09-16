@@ -1,0 +1,21 @@
+---
+- block:
+  - name: manage /etc/sysconfig/chronyd
+    template:
+      src: chronyd.j2
+      dest: /etc/sysconfig/chronyd
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart chronyd
+  - name: manage /etc/chrony.conf
+    template:
+      src: chrony.conf.j2
+      dest: /etc/chrony.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart chronyd
+  tags:
+    - chrony
+    - chronyd

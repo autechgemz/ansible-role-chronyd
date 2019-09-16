@@ -1,0 +1,81 @@
+# {{ ansible_managed }}
+{% if chrony_server is defined and chrony_server != None %}
+{% for addr in chrony_server %}
+server {{ addr }}
+{% endfor %}
+{% else %}
+server 0.centos.pool.ntp.org iburst
+server 1.centos.pool.ntp.org iburst
+server 2.centos.pool.ntp.org iburst
+server 3.centos.pool.ntp.org iburst
+{% endif %}
+{% if chrony_stratumweight is defined and chrony_stratumweight != None %}
+stratumweight {{ chrony_stratumweight }}
+{% else %}
+stratumweight 0
+{% endif %}
+{% if chrony_driftfile is defined and chrony_driftfile != None %}
+driftfile {{ chrony_driftfile }}
+{% else %}
+driftfile /var/lib/chrony/drift
+{% endif %}
+{% if chrony_rtcsync %}
+rtcsync
+{% endif %}
+{% if chrony_makestep is defined and chrony_makestep != None %}
+makestep {{ chrony_makestep | list | join (" ") }} 
+{% else %}
+makestep 1.0 3
+
+{% endif %}
+{% if chrony_allownet is defined and chrony_allownet != None %}
+{% for net in chrony_allownet %}
+allow {{ net }} 
+{% endfor %}
+{% endif %}
+{% if chrony_bindcmdaddress is defined and chrony_bindcmdaddress != None %}
+{% for addr in chrony_bindcmdaddress %}
+bindcmdaddress {{ addr }} 
+{% endfor %}
+{% else %}
+bindcmdaddress 127.0.0.1
+{% endif %}
+{% if chrony_keyfile is defined and chrony_keyfile != None %}
+keyfile {{ chrony_keyfile }}
+{% else %}
+keyfile /etc/chrony.keys
+{% endif %}
+{% if chrony_commandkey is defined and chrony_commandkey != None %}
+commandkey {{ chrony_commandkey }} 
+{% else %}
+commandkey 1
+{% endif %}
+{% if chrony_generatecommandkey and chrony_generatecommandkey != None %}
+generatecommandkey
+{% endif %}
+{% if chrony_noclientlog %}
+noclientlog
+{% endif %}
+{% if chrony_logchange is defined and chrony_logchange != None %}
+logchange {{ chrony_logchange }} 
+{% else %}
+logchange 0.5
+{% endif %}
+{% if chrony_logdir is defined and chrony_logdir != None %}
+logdir {{ chrony_logdir }} 
+{% else %}
+logdir /var/log/chrony
+{% endif %}
+{% if chrony_leapsecmode is defined and chrony_leapsecmode != None %} 
+{% if chrony_leapsecmode == 'system' or chrony_leapsecmode == 'step' or chrony_leapsecmode == 'slew' or chrony_leapsecmode == 'ignore' %}
+leapsecmode={{ chrony_leapsecmode }}
+{% else %}
+leapsecmode=slew
+{% endif %}
+{% endif %}
+{% if chrony_maxslewrate is defined and chrony_maxslewrate != None %}
+maxslewrate {{ chrony_maxslewrate|int }}
+{% endif %}
+{% if chrony_smoothtime is defined and chrony_smoothtime != None %}
+smoothtime {{ chrony_smoothtime | list | join(" ") }}
+{% endif %}

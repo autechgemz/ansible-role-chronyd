@@ -1,0 +1,32 @@
+---
+
+chrony_package:
+  - chrony 
+
+chrony_service: True
+
+chrony_server:
+  - "0.centos.pool.ntp.org iburst"
+  - "1.centos.pool.ntp.org iburst"
+  - "2.centos.pool.ntp.org iburst"
+  - "3.centos.pool.ntp.org iburst"
+chrony_stratumweight: "0"
+chrony_driftfile: "/var/lib/chrony/drift"
+chrony_rtcsync: True
+chrony_makestep:
+  - "10"
+  - "3"
+chrony_bindcmdaddress:
+  - "127.0.0.1"
+chrony_keyfile: "/etc/chrony.keys"
+chrony_commandkey: "1"
+chrony_generatecommandkey: True
+chrony_noclientlog: True
+chrony_logchange: 0.5
+chrony_logdir: "/var/log/chrony"
+chrony_option:
+
+#chrony_smoothtime:
+#  - "400"
+#  - "0.001"
+#  - "leaponly"

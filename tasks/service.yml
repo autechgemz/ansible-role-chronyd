@@ -1,0 +1,17 @@
+---
+- block:
+  - name: manage chronyd service disable/stopped
+    service:
+      name: chronyd
+      state: stopped
+      enabled: no 
+    when: chrony_service is defined and not chrony_service
+  - name: manage chronyd service enable/started
+    service:
+      name: chronyd
+      state: started
+      enabled: yes
+    when: chrony_service is defined and chrony_service
+  tags:
+    - chrony
+    - chronyd
