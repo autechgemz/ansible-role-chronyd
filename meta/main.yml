@@ -2,7 +2,7 @@ galaxy_info:
   role_name: chronyd
   namespace: autechgemz
   author: autechgemz
-  description: "chrony Network Time Protocol Service"
+  description: "Manage chrony Network Time Protocol Service"
   license: MIT
   min_ansible_version: "1.2"
   galaxy_tags: []
