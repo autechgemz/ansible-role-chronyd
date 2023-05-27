@@ -1,21 +1,35 @@
 ---
-- block:
-  - name: manage /etc/sysconfig/chronyd
-    template:
-      src: chronyd.j2
-      dest: /etc/sysconfig/chronyd
-      owner: root
-      group: root
-      mode: 0644
-    notify: restart chronyd
-  - name: manage /etc/chrony.conf
-    template:
-      src: chrony.conf.j2
-      dest: /etc/chrony.conf
-      owner: root
-      group: root
-      mode: 0644
-    notify: restart chronyd
+
+- name: Configration tasks
   tags:
-    - chrony
+    - chronyd_config
     - chronyd
+  become: true
+  block:
+    - name: Merge daemon configration
+      ansible.builtin.set_fact:
+        chronyd_daemon_config_merged: "{{ chronyd_daemon_config_default | ansible.builtin.combine(chronyd_daemon_config_options, recursive=True) }}"
+    - name: Merge server configration
+      ansible.builtin.set_fact:
+        chronyd_server_config_merged: "{{ chronyd_server_config_default | ansible.builtin.combine(chronyd_server_config_options, recursive=True) }}"
+
+    - name: Debug variables
+      ansible.builtin.include_tasks: debug/config.yml
+      when: chronyd_debug is defined and chronyd_debug
+
+    - name: Generate daemon config file
+      ansible.builtin.template:
+        src: chrony.j2
+        dest: "{{ chronyd_daemon_config_file }}"
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart chronyd service
+    - name: Generate server config file
+      ansible.builtin.template:
+        src: chrony.conf.j2
+        dest: "{{ chronyd_config_file }}"
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart chronyd service

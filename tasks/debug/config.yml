@@ -1,0 +1,25 @@
+---
+
+- name: Debug config tasks
+  when: chronyd_debug is defined and chronyd_debug
+  block:
+
+    - name: Print chronyd_daemon_config_options
+      ansible.builtin.debug:
+        var: chronyd_daemon_config_options
+    - name: Print chronyd_daemon_config_default
+      ansible.builtin.debug:
+        var: chronyd_daemon_config_default
+    - name: Print chronyd_daemon_config_merged
+      ansible.builtin.debug:
+        var: chronyd_daemon_config_merged
+
+    - name: Print chronyd_server_config_merged
+      ansible.builtin.debug:
+        var: chronyd_server_config_options
+    - name: Print chronyd_server_config_default
+      ansible.builtin.debug:
+        var: chronyd_server_config_default
+    - name: Print chronyd_server_config_merged
+      ansible.builtin.debug:
+        var: chronyd_server_config_merged

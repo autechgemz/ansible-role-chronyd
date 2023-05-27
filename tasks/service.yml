@@ -1,17 +1,14 @@
 ---
-- block:
-  - name: manage chronyd service disable/stopped
-    service:
-      name: chronyd
-      state: stopped
-      enabled: no 
-    when: chrony_service is defined and not chrony_service
-  - name: manage chronyd service enable/started
-    service:
-      name: chronyd
-      state: started
-      enabled: yes
-    when: chrony_service is defined and chrony_service
+
+- name: Service tasks
   tags:
-    - chrony
+    - chronyd_service
     - chronyd
+  become: true
+  block:
+    - name: Manage service
+      ansible.builtin.service:
+        name: "{{ chronyd_service_name }}"
+        state: "{{ chronyd_service_ensure }}"
+        enabled: "{{ chronyd_service_enable }}"
+      when: not ansible_check_mode

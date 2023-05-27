@@ -1,0 +1,16 @@
+---
+
+chronyd_daemon_config_default:
+  OPTIONS: '-F 2'
+
+chronyd_server_config_default:
+  pool:
+    - '2.rocky.pool.ntp.org iburst'
+  sourcedir: /run/chrony-dhcp
+  driftfile: /var/lib/chrony/drift
+  makestep: '1.0 3'
+  rtcsync: ""
+  keyfile: /etc/chrony.keys
+  ntsdumpdir: /var/lib/chrony
+  leapsectz: right/UTC
+  logdir: /var/log/chrony

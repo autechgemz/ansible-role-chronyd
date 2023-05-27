@@ -1,10 +1,25 @@
 ---
 
-- include_tasks: install.yml
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7
-
-- include_tasks: config.yml
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7
-
-- include_tasks: service.yml
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7
+- name: Main tasks
+  tags:
+    - chronyd_install
+    - chronyd_config
+    - chronyd_service
+    - chronyd
+  block:
+    - name: Load dependency variables
+      ansible.builtin.include_vars: "{{ item }}"
+      loop:
+        - "{{ ansible_os_family }}/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family }}.yml"
+    - name: Install tasks
+      ansible.builtin.import_tasks: install.yml
+    - name: Configration tasks
+      ansible.builtin.import_tasks: config.yml
+    - name: Service tasks
+      ansible.builtin.import_tasks: service.yml
+  rescue:
+    - name: Print Error
+      ansible.builtin.debug:
+        msg: "Unsupport platform or error occurred due to some reason."
+      failed_when: true

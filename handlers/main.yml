@@ -1,5 +1,7 @@
 ---
-- name: restart chronyd
-  systemd:
-    name: chronyd
+- name: Restart chronyd service
+  ansible.builtin.service:
+    name: "{{ chronyd_service_name }}"
     state: restarted
+  when: not ansible_check_mode
+  become: true

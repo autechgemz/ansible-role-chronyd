@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+{% if chronyd_daemon_config_merged is defined and chronyd_daemon_config_merged %}
+{%   for key, value in chronyd_daemon_config_merged.items() %}
+{{     key }}="{{ value }}"
+{%   endfor %}
+{% endif %}

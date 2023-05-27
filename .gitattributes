@@ -1,0 +1,6 @@
+.yamllint eol=lf
+.ansible-lint eol=lf
+*.sh eol=lf
+*.yaml eol=lf
+*.yml eol=lf
+*.j2 eol=lf

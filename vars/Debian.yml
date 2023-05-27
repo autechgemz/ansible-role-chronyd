@@ -1,0 +1,9 @@
+---
+
+chronyd_package_name: ['chrony']
+
+chronyd_service_name: 'chronyd'
+
+chronyd_daemon_config_file: '/etc/default/chrony'
+
+chronyd_config_file: '/etc/chrony/chrony.conf'
