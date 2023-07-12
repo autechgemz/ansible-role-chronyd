@@ -13,6 +13,7 @@
       update_cache: true
       state: "{{ chronyd_package_ensure }}"
   - name: Install chronyd package
+    when: ansible_os_family == 'RedHat'
     ansible.builtin.yum:
       name: "{{ chronyd_package_name }}"
       state: "{{ chronyd_package_ensure }}"
