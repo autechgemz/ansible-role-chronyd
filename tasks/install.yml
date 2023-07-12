@@ -6,13 +6,13 @@
     - chronyd
   become: true
   block:
-  - name: Update APT package index files # subtle
-    ansible.builtin.apt:
-      update_cache: true
-      cache_valid_time: 1800
-    when: ansible_os_family == 'Debian'
   - name: Install chronyd package
-    ansible.builtin.package:
-      pkg: ["{{ item }}"]
+    when: ansible_os_family == 'Debian'
+    ansible.builtin.apt:
+      name: "{{ chronyd_package_name }}"
+      update_cache: true
       state: "{{ chronyd_package_ensure }}"
-    with_items: "{{ chronyd_package_name }}"
+  - name: Install chronyd package
+    ansible.builtin.yum:
+      name: "{{ chronyd_package_name }}"
+      state: "{{ chronyd_package_ensure }}"
