@@ -1,0 +1,22 @@
+---
+
+chronyd_daemon_config_default:
+  OPTIONS: ""
+
+chronyd_server_config_default:
+  driftfile: /var/lib/chrony/drift
+  server:
+    - time1.google.com iburst
+    - time2.google.com iburst
+    - time3.google.com iburst
+    - time4.google.com iburst
+  logdir: /var/log/chrony
+  makestep: '1 3'
+  rtcsync: ""
+  maxupdateskew: '100.0'
+  local: 'stratum 10'
+  keyfile: '/etc/chrony.keys'
+  logchange: '0.5'
+  leapsecmode: 'slew'
+  maxslewrate: '1000'
+  smoothtime: '400 0.001 leaponly'

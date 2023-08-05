@@ -14,8 +14,14 @@ None
 
 ## OS Platforms
 
-- RHEL-8 or higher
-- Ubuntu-20 or higher
+- RHEL-8
+- RHEL-9
+- Almalinux-8
+- Almalinux-9
+- Rockylinux-8
+- Rockylinux-9
+- Ubuntu-20
+- Ubuntu-22
 
 ## Example Playbook
 
