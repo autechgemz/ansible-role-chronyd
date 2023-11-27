@@ -1,12 +1,14 @@
 # {{ ansible_managed }}
 {% if chronyd_server_config_merged is defined and chronyd_server_config_merged %}
 {%   for key, value in chronyd_server_config_merged.items() %}
-{%     if value is iterable and (value is not string and value is not mapping) %}
+{%     if value and value is iterable and (value is not string and value is not mapping) %}
 {%         for line in value %}
 {{           key }} {{ line | string }}
 {%         endfor %}
 {%     else %}
-{{       key }} {{ value | string }}
+{%       if value %}
+{{         key }} {{ value | string }}
+{%       endif %}
 {%     endif %}
 {%   endfor %}
 {% endif %}
