@@ -6,7 +6,7 @@
 {{           key }} {{ line | string }}
 {%         endfor %}
 {%     else %}
-{%       if value %}
+{%       if value or not value and key == 'rtcsync' %}
 {{         key }} {{ value | string }}
 {%       endif %}
 {%     endif %}
